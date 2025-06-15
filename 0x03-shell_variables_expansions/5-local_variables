@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "=== Environment Variables ==="
+printenv
+
+echo -e "\n=== Local Variables ==="
+set
+
+echo -e "\n=== Functions ==="
+declare -F
