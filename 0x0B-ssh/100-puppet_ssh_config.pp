@@ -11,3 +11,4 @@ file { '/home/bico/.ssh/config':
         PasswordAuthentication no
     | EOF
 }
+
