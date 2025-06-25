@@ -5,3 +5,4 @@ Host gcp-node02
     User bico 
     IdentityFile ~/.ssh/school
     PasswordAuthentication no
+    
