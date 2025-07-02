@@ -1,0 +1,20 @@
+#!/usr/bin/env bash 
+
+# 3-redirection - Setup Nginx with a 301 redirect on /redirect_me
+
+# Update and install Nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+# Create a new Nginx configuration or modify the default one
+NGINX_DEFAULT="/etc/nginx/sites-available/default"
+
+# Use sed to insert a redirect rule into the server block
+sudo sed -i '/^\s*location \/ {/i \    location /redirect_me {\n return 301 bix.tech;\n    }\n' "$NGINX_DEFAULT"
+
+# Make sure the root page has some content
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Restart Nginx without systemctl
+sudo service nginx restart
+

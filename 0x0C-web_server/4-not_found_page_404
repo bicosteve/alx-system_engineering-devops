@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+
+# Update package list and install Nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+# Define paths
+ERROR_PAGE="/var/www/html/404.html"
+NGINX_DEFAULT="/etc/nginx/sites-available/default"
+
+# Create the custom 404 error page
+echo "Ceci n'est pas une page" | sudo tee "$ERROR_PAGE"
+
+# Use sed to insert or update the error_page directive and location for 404
+sudo sed -i '/^.*server_name.*$/a \\n\terror_page 404 /404.html;\n\tlocation = /404.html {\n\t\tinternal;\n\t}' "$NGINX_DEFAULT"
+
+# Make sure the root page still works
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Restart Nginx using service (not systemctl)
+sudo service nginx restart
+
