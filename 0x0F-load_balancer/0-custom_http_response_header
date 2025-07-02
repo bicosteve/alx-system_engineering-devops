@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+
+# 0-custom_http_response_header - Setup Nginx with a custom header for 1268749-web-01
+
+# Install Nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+# Set custom index page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Modify default Nginx site config to include static hostname in header
+NGINX_CONF="/etc/nginx/sites-available/default"
+sudo sed -i "/^.*server_name.*$/a \\n\tadd_header X-Served-By '1268749-web-01';" "$NGINX_CONF"
+
+# Restart Nginx using service (not systemctl)
+sudo service nginx restart
