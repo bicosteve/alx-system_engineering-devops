@@ -33,3 +33,4 @@ sudo ufw --force enable
 
 # 7. Done
 echo "UFW configured: Ports 22, 80, 443 allowed; Port 8080 redirected to 80"
+

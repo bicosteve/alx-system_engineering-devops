@@ -20,3 +20,4 @@ sudo ufw enable
 
 # 6. (Optional) Check status
 sudo ufw status verbose
+
