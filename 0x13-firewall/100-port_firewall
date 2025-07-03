@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# This script installs ufw, configures ports 22, 80, 443, 
+# and sets up port forwarding from 8080 to 80
+
+echo "Installing and configuring UFW..."
+
+# 1. Install UFW
+sudo apt update
+sudo apt install ufw -y
+
+# 2. Default firewall policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# 3. Allow specific TCP ports
+sudo ufw allow 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+# 4. Modify /etc/default/ufw to allow forwarding
+sudo sed -i 's/^DEFAULT_FORWARD_POLICY=.*/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
+
+# 5. Insert port redirection rule at top of before.rules
+sudo sed -i '/^*filter/i \
+*nat\n\
+:PREROUTING ACCEPT [0:0]\n\
+-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80\n\
+COMMIT\n' /etc/ufw/before.rules
+
+# 6. Enable UFW
+sudo ufw --force enable
+
+# 7. Done
+echo "UFW configured: Ports 22, 80, 443 allowed; Port 8080 redirected to 80"
