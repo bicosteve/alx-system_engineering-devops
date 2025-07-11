@@ -1,0 +1,28 @@
+#!/bin/bash
+
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    daemon
+    ssl-default-bind-options no-sslv3
+    ssl-default-bind-ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+
+frontend http-in
+    bind *:80
+    redirect scheme https code 301 if !{ ssl_fc }
+
+frontend https-in
+    bind *:443 ssl crt /etc/ssl/bico-steve.com/www.bico-steve.com.pem
+    default_backend web-backend
+
+backend web-backend
+    server web-01 192.168.1.10:80 check
+    server web-02 192.168.1.11:80 check
