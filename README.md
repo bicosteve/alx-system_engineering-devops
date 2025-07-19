@@ -459,3 +459,26 @@ The file 100-redirect_http_to_https must be your HAproxy configuration file
 (2) --> 3.88.165.160
 (3) --> 54.210.132.176
 (4) --> 54.82.251.230
+
+````bash
+# 0x18. Webstack Monitoring
+
+This directory contains the setup for Datadog monitoring on `web-01`.
+
+## Setup
+
+1. Signed up on [Datadog US1](https://app.datadoghq.com)
+2. Created an API key and an application key
+3. Installed Datadog agent using:
+    ```bash
+    ./install_datadog.sh
+    ```
+4. Set hostname to `XX-web-01` so the server is visible in the Datadog UI
+5. Validated visibility via the [Datadog API](https://docs.datadoghq.com/api/latest/hosts/)
+
+## Datadog Keys
+
+- API Key: Added to user profile
+- Application Key: Added to user profile
+
+````
