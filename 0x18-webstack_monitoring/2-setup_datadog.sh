@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Replace with your actual Datadog API and App keys
-DD_API_KEY="your_dd_api_key"
-DD_APP_KEY="your_dd_app_key"
+DD_API_KEY="***"
+DD_APP_KEY="***"
 
 # Create dashboard with 4 widgets
 response=$(curl -s -X POST "https://api.datadoghq.com/api/v1/dashboard" \
